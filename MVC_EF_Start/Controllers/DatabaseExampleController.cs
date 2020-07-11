@@ -25,7 +25,21 @@ namespace MVC_EF_Start.Controllers
 
     public async Task<ViewResult> DatabaseOperations()
     {
+      
+      
       // CREATE operation
+      Student MyStudent = new Student();
+      MyStudent.Name = "Brian Hammond 3";
+
+      Course MyCourse = new Course();
+      MyCourse.Name = "ISM 6225 Distributed Information System 3";
+      
+      Enrolment MyEnrollment = new Enrolment();
+      MyEnrollment.grade = "B+";
+            MyEnrollment.course = MyCourse;
+            MyEnrollment.student = MyStudent;
+
+
       Company MyCompany = new Company();
       MyCompany.symbol = "MCOB";
       MyCompany.name = "ISM";
@@ -36,17 +50,17 @@ namespace MVC_EF_Start.Controllers
 
       Quote MyCompanyQuote1 = new Quote();
       //MyCompanyQuote1.EquityId = 123;
-      MyCompanyQuote1.date = "11-23-2018";
+      MyCompanyQuote1.date = "11-25-2020";
       MyCompanyQuote1.open = 46.13F;
       MyCompanyQuote1.high = 47.18F;
       MyCompanyQuote1.low = 44.67F;
       MyCompanyQuote1.close = 47.01F;
       MyCompanyQuote1.volume = 37654000;
       MyCompanyQuote1.unadjustedVolume = 37654000;
-      MyCompanyQuote1.change = 1.43F;
+      MyCompanyQuote1.change = 13.43F;
       MyCompanyQuote1.changePercent = 0.03F;
       MyCompanyQuote1.vwap = 9.76F;
-      MyCompanyQuote1.label = "Nov 23";
+      MyCompanyQuote1.label = "Nov 25";
       MyCompanyQuote1.changeOverTime = 0.56F;
       MyCompanyQuote1.symbol = "MCOB";
 
@@ -66,9 +80,12 @@ namespace MVC_EF_Start.Controllers
       MyCompanyQuote2.changeOverTime = 0.56F;
       MyCompanyQuote2.symbol = "MCOB";
 
-      dbContext.Companies.Add(MyCompany);
-      dbContext.Quotes.Add(MyCompanyQuote1);
-      dbContext.Quotes.Add(MyCompanyQuote2);
+      //dbContext.Students.Add(MyStudent);
+      //dbContext.Courses.Add(MyCourse);
+      dbContext.Enrolments.Add(MyEnrollment);
+      //dbContext.Companies.Add(MyCompany);
+      //dbContext.Quotes.Add(MyCompanyQuote1);
+      //dbContext.Quotes.Add(MyCompanyQuote2);
 
       dbContext.SaveChanges();
       
@@ -83,7 +100,7 @@ namespace MVC_EF_Start.Controllers
                               .First();
 
       // UPDATE operation
-      CompanyRead1.iexId = "MCOB";
+      CompanyRead1.iexId = "MCOB223222";
       dbContext.Companies.Update(CompanyRead1);
       //dbContext.SaveChanges();
       await dbContext.SaveChangesAsync();
@@ -116,5 +133,18 @@ namespace MVC_EF_Start.Controllers
       return View();
     }
 
-  }
+        public ViewResult StudentUpdate()
+        {
+            Student Student1 = dbContext.Students
+                                            .Where(c => c.Id == 2)
+                                            .First();
+
+            Student1.Name = "Dan Howard";
+            dbContext.Students.Update(Student1);
+            dbContext.SaveChanges();
+            
+            return View();
+        }
+
+    }
 }
